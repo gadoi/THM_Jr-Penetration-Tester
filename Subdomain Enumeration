@@ -1,0 +1,78 @@
+ffuf -w /usr/share/seclists/Discovery/DNS/namelist.txt -H "Host: FUZZ.acmeitsupport.thm" -u http://10.10.177.83
+ffuf -w /usr/share/seclists/Discovery/DNS/namelist.txt -H "Host: FUZZ.acmeitsupport.thm" -u http://10.10.177.83
+
+        /'___\  /'___\           /'___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v1.3.1 Kali Exclusive <3
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://10.10.177.83
+ :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/DNS/namelist.txt
+ :: Header           : Host: FUZZ.acmeitsupport.thm
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200,204,301,302,307,401,403,405
+________________________________________________
+
+12                      [Status: 200, Size: 2395, Words: 503, Lines: 52]
+9                       [Status: 200, Size: 2395, Words: 503, Lines: 52]
+access                  [Status: 200, Size: 2395, Words: 503, Lines: 52]
+18                      [Status: 200, Size: 2395, Words: 503, Lines: 52]
+accounting              [Status: 200, Size: 2395, Words: 503, Lines: 52]
+7                       [Status: 200, Size: 2395, Words: 503, Lines: 52]
+1                       [Status: 200, Size: 2395, Words: 503, Lines: 52]
+6                       [Status: 200, Size: 2395, Words: 503, Lines: 52]
+17                      [Status: 200, Size: 2395, Words: 503, Lines: 52]
+10                      [Status: 200, Size: 2395, Words: 503, Lines: 52]
+academico               [Status: 200, Size: 2395, Words: 503, Lines: 52]
+0                       [Status: 200, Size: 2395, Words: 503, Lines: 52]
+3com                    [Status: 200, Size: 2395, Words: 503, Lines: 52]
+16                      [Status: 200, Size: 2395, Words: 503, Lines: 52]
+a2                      [Status: 200, Size: 2395, Words: 503, Lines: 52]
+....
+
+size 2395
+
+
+
+ffuf -w /usr/share/seclists/Discovery/DNS/namelist.txt -H "Host: FUZZ.acmeitsupport.thm" -u http://10.10.177.83 -fs 2395
+
+
+ffuf -w /usr/share/seclists/Discovery/DNS/namelist.txt -H "Host: FUZZ.acmeitsupport.thm" -u http://10.10.177.83 -fs 2395
+
+        /'___\  /'___\           /'___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v1.3.1 Kali Exclusive <3
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://10.10.177.83
+ :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/DNS/namelist.txt
+ :: Header           : Host: FUZZ.acmeitsupport.thm
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200,204,301,302,307,401,403,405
+ :: Filter           : Response size: 2395
+________________________________________________
+
+delta                   [Status: 200, Size: 51, Words: 7, Lines: 1]
+yellow                  [Status: 200, Size: 56, Words: 8, Lines: 1]
+:: Progress: [1907/1907] :: Job [1/1] :: 128 req/sec :: Duration: [0:00:15] :: Errors: 0 ::
+
+https://tryhackme.com/room/subdomainenumeration
+https://www.kaidosec.com/2021/09/18/tryhackme-writeup-subdomain-enumeration/
