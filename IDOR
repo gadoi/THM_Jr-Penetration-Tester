@@ -1,0 +1,15 @@
+Task 7 A Practical IDOR Example 
+https://10-10-94-187.p.thmlabs.com/customers/account
+Create acount --> login
+F12 --> https://10-10-94-187.p.thmlabs.com/api/v1/customer?id=15
+---> Edit and resend
+change id=15 to id=1 vs id=3
+
+- What is the username for user id 1?
+adam84
+
+
+- What is the email address for user id 3?
+j@fakemail.thm
+
+https://tryhackme.com/room/idor
