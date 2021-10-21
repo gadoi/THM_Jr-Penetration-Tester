@@ -1,0 +1,123 @@
+#Task 2 Manual Discovery - Robots.txt 
+http://10.10.202.48/robots.txt
+What is the directory in the robots.txt that isn't allowed to be viewed by web crawlers?
+/staff-portal
+
+#Task 3 Manual Discovery - Favicon 
+curl https://static-labs.tryhackme.cloud/sites/favicon/images/favicon.ico | md5sum
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  1406  100  1406    0     0   3480      0 --:--:-- --:--:-- --:--:--  3480
+f276b19aabcb4ae8cda4d22625c6735f  -
+
+search f276b19aabcb4ae8cda4d22625c6735f in https://wiki.owasp.org/index.php/OWASP_favicon_database
+
+- What framework did the favicon belong to?
+cgiirc
+
+#Task 4 Manual Discovery - Sitemap.xml 
+What is the path of the secret area that can be found in the sitemap.xml file?
+/s3cr3t-area
+
+#Task 5 Manual Discovery - HTTP Headers 
+hint:
+curl http://10.10.202.48/ -v   
+*   Trying 10.10.202.48:80...
+* Connected to 10.10.202.48 (10.10.202.48) port 80 (#0)
+> GET / HTTP/1.1
+> Host: 10.10.202.48
+> User-Agent: curl/7.71.1
+> Accept: */*
+> 
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 200 OK
+< Server: nginx/1.18.0 (Ubuntu)
+< Date: Thu, 21 Oct 2021 09:29:24 GMT
+< Content-Type: text/html; charset=UTF-8
+< Transfer-Encoding: chunked
+< Connection: keep-alive
+< X-FLAG: THM{HEADER_FLAG}
+< 
+answer: THM{HEADER_FLAG}
+
+#Task 6 Manual Discovery - Framework Stack 
+https://static-labs.tryhackme.cloud/sites/thm-web-framework/  --> documment
+
+
+Once you've installed the framework navigate to the /thm-framework-login path on your website.
+You can login with the username admin and password admin ( make sure you change this password )
+
+http://10.10.202.48/thm-framework-login
+
+answer: THM{CHANGE_DEFAULT_CREDENTIALS}
+
+
+
+#Task 7 OSINT - Google Hacking / Dorking 
+What Google dork operator can be used to only show results from a particular site?
+site:
+
+
+#Task 8 OSINT - Wappalyzer 
+- What online tool can be used to identify what technologies a website is running?
+Wappalyzer
+
+#Task 9 OSINT - Wayback Machine 
+- What is the website address for the Wayback Machine?
+https://archive.org/web/
+
+
+Task 10 OSINT - GitHub 
+- What is Git?
+version control system
+
+
+#Task 11 OSINT - S3 Buckets 
+What URL format do Amazon S3 buckets end in?
+.s3.amazonaws.com
+
+
+#Task 12 Automated Discovery 
+ffuf -w /usr/share/seclists/Discovery/Web-Content/common.txt -u http://10.10.202.48/FUZZ                                               1 ⨯
+
+        /'___\  /'___\           /'___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v1.3.1 Kali Exclusive <3
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://10.10.202.48/FUZZ
+ :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/Web-Content/common.txt
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200,204,301,302,307,401,403,405
+________________________________________________
+
+assets                  [Status: 301, Size: 178, Words: 6, Lines: 8]
+contact                 [Status: 200, Size: 3108, Words: 747, Lines: 65]
+customers               [Status: 302, Size: 0, Words: 1, Lines: 1]
+development.log         [Status: 200, Size: 27, Words: 5, Lines: 1]
+monthly                 [Status: 200, Size: 28, Words: 4, Lines: 1]
+news                    [Status: 200, Size: 2538, Words: 518, Lines: 51]
+private                 [Status: 301, Size: 178, Words: 6, Lines: 8]
+robots.txt              [Status: 200, Size: 46, Words: 4, Lines: 3]
+sitemap.xml             [Status: 200, Size: 1383, Words: 260, Lines: 43]
+:: Progress: [4702/4702] :: Job [1/1] :: 129 req/sec :: Duration: [0:00:37] :: Errors: 0 ::
+
+
+- What is the name of the directory beginning "/mo...." that was discovered?
+/monthly
+
+- What is the name of the log file that was discovered?
+/development.log
+
+https://tryhackme.com/room/contentdiscovery
+https://medium.com/@mrl0s3r_09/tryhackme-content-discovery-by-subhadip-nag-mrl0s3r-54384e573159
+https://hacklido.com/blog/474-tryhackme-content-discovery-walkthrough?__cf_chl_managed_tk__=pmd_KVuxCVJyp6kiOGlbVYqju2t1WkFiB.Xj.Uws5aHGXLs-1634808387-0-gqNtZGzNAxCjcnBszQZR
