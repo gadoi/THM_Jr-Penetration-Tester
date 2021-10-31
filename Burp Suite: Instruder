@@ -1,0 +1,25 @@
+
+
+100.2.60=6000
+
+We also need the Attack type to be "Pitchfork":
+Payload Sets --->simple list
+Payload set 1 --> username.txt
+Payload Set 2 --> password
+
+find 
+m.rivera:letmein1  with length 543
+
+Add $ ---> $6$
+Payload Sets ---> Number
+Payload Options [Number]
+From 1
+To 100
+Step 1
+---> Start attack
+
+Find Request 83, payload 83
+--> response
+THM{MTMxNTg5NTUzMWM0OWRlYzUzMDVjMzJl}
+
+https://deepakkush.medium.com/tryhackme-jr-penetration-tester-burp-suite-3f60e4bed05c
